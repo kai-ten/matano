@@ -22,12 +22,14 @@ export class DPCommonStack extends MatanoStack {
     this.matanoIngestionBucket = new S3BucketWithNotifications(this, "MatanoIngestionBucket", {
       bucketProps: {
         blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+        encryption: s3.BucketEncryption.KMS_MANAGED,
       },
     });
 
     this.matanoLakeStorageBucket = new S3BucketWithNotifications(this, "MatanoLakeStorageBucket", {
       bucketProps: {
         blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+        encryption: s3.BucketEncryption.KMS_MANAGED,
       },
       queueProps: {
         visibilityTimeout: cdk.Duration.seconds(185),
@@ -37,6 +39,7 @@ export class DPCommonStack extends MatanoStack {
 
     this.realtimeBucket = new Bucket(this, "MatanoRealtimeBucket", {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+      encryption: s3.BucketEncryption.KMS_MANAGED,
     });
     this.realtimeBucketTopic = new Topic(this, "MatanoRealtimeBucketNotifications", {
       displayName: "MatanoRealtimeBucketNotifications",
@@ -53,6 +56,7 @@ export class DPCommonStack extends MatanoStack {
 
     const matanoAthenaResultsBucket = new s3.Bucket(this, "MatanoAthenaResults", {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+      encryption: s3.BucketEncryption.KMS_MANAGED,
     });
     const matanoAthenaWorkgroup = new athena.CfnWorkGroup(this, "MatanoAthenaWorkGroup", {
       name: "matano",
